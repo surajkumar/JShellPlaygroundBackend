@@ -35,6 +35,7 @@ jobs:
           latest_version=$(curl -s "https://hub.docker.com/v2/repositories/library/eclipse-temurin/tags/?page_size=100" | \
           jq -r '[.results[].name | select(test("alpine")) | select(test("^[0-9]+"))] | map(capture("^(?<major>[0-9]+)")) | max_by(.major | tonumber) | .major')
           
+          echo "Latest version is $latest_version"
           
           # Check if the latest_version is null or if no new version is available
           if [ -z "$latest_version" ] || [ "$latest_version" -le "$current_version" ]; then
