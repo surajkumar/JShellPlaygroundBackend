@@ -36,8 +36,8 @@ jobs:
           jq -r '[.results[].name | select(test("alpine")) | select(test("^[0-9]+"))] | map(capture("^(?<major>[0-9]+)")) | max_by(.major | tonumber) | .major')
           
           
-          # Check if a new version is available
-          if [ "$latest_version" -le "$current_version" ]; then
+          # Check if the latest_version is null or if no new version is available
+          if [ -z "$latest_version" ] || [ "$latest_version" -le "$current_version" ]; then
             echo "No new versions available"
             exit 0
           fi
